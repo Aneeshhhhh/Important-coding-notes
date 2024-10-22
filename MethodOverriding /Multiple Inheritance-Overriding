@@ -1,0 +1,37 @@
+import java.io.*;
+interface Animal{
+    void sound();
+}
+interface Mammal{
+    void is();
+}
+class Dog implements Animal, Mammal{
+    public void sound(){
+        System.out.println("Bark");
+    }
+    public void is(){
+        System.out.println("Is a mammal");
+    }
+
+
+}
+class Cat implements Animal, Mammal{
+
+    public void sound() {
+        System.out.println("Meow");
+    }
+    public void is(){
+        System.out.println("Is a mammal as well");
+    }
+}
+public class Main{
+    public static void main(String[] args) {
+        Cat cat = new Cat();
+        Dog dog  = new Dog();
+
+        cat.sound();
+        dog.sound();
+        cat.is();
+        dog.is();
+    }
+}
