@@ -1,0 +1,55 @@
+abstract class Animal{
+
+
+    abstract void sound();
+
+
+    abstract void exist();
+    abstract void diet();
+}
+class Dog extends Animal{
+
+    public void exist(){
+        System.out.println("Exists");
+    }
+    public void sound(){
+        System.out.println("Bark");
+    }
+    public void diet(){
+        System.out.println("Pedigree");
+    }
+}
+class Cat extends Animal{
+
+    public void exist(){
+        System.out.println("Exists as well");
+    }
+    public void sound(){
+        System.out.println("Meow");
+    }
+    public void diet(){
+        System.out.println("Royal Canin");
+    }
+}
+
+
+public class Main{
+    public static void main(String[] args) {
+
+        Animal[]animals = new Animal[3];
+        animals[0]=new Dog();
+        animals[1]=new Cat();
+        animals[2]=new Dog();
+
+        for(Animal animal: animals){
+            animal.exist();
+            animal.sound();
+            animal.diet();
+        }
+
+
+
+
+
+    }
+}
