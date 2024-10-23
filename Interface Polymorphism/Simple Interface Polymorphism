@@ -1,0 +1,56 @@
+interface Animal{
+    void diet();
+    void habitat();
+    void lifespan();
+
+}
+class Herbivores implements Animal{
+    public void diet(){
+        System.out.println("Vegeterian");
+    }
+    public void habitat(){
+        System.out.println("Grasslands");
+    }
+    public void lifespan(){
+        System.out.println("Depends");
+    }
+    String name;
+    public Herbivores(String name){
+        this.name=name;
+    }
+
+}
+
+class Carnivores implements Animal{
+    public void diet(){
+        System.out.println("Carnivorous");
+    }
+    public void habitat(){
+        System.out.println("Everywhere");
+    }
+    public void lifespan(){
+        System.out.println("Depends");
+    }
+    String name;
+    public Carnivores(String name){
+        this.name=name;
+    }
+}
+
+public class Main{
+    public static void main(String[] args) {
+        Animal[] animals =new Animal[3];
+        animals[0]=new Herbivores("Horse");
+        animals[1]=new Carnivores("Lion");
+        animals[2]=new Herbivores("Camel");
+
+        for(Animal animal:animals){
+            animal.diet();
+            animal.lifespan();
+            animal.habitat();
+
+
+        }
+
+    }
+}
