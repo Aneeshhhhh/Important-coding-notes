@@ -1,0 +1,33 @@
+import java.util.Arrays;
+public class Main{
+    public static void main(String[] args) {
+
+        int n = 3;
+
+
+        System.out.println((Fibo(n)));
+
+    }
+    public static int fibonacci(int n, int arr[]){
+
+
+        if ((n == 0) || (n == 1)) {
+            return n;
+        }else if (arr[n] != -1) {
+            return arr[n];
+        }
+        else {
+            return arr[n]= fibonacci(n - 1,arr) + fibonacci(n - 2,arr);
+        }
+
+
+    }
+    static int Fibo(int n) {
+
+        // Memoization array to store the results
+        int[] arr = new int[n + 1];
+        Arrays.fill(arr, -1);
+        return fibonacci(n, arr);
+    }
+
+}
