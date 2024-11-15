@@ -1,0 +1,35 @@
+//Idea:
+//        1.To sort the array lexicographically so that all the dissimilar strings are at the start and the last
+//        2.Create a StringBuilder
+//        3.Create a for loop with Math.min. Inside, the math.min will be the first and last arrays' lengths.
+//        This is done so that there's no IndexOutOfBounds exception
+//        4. Create an if condition such that if the Nth character of 1st array does not match the Nth character of last array, to return the StringBuilder
+//        5. Append the Nth character of the 1st array to the StringBuilder. Use .toString(). The if condition ensures that all the left characters match with each other.
+//        6.Out of the for loop, once again print/return.
+
+
+import java.util.Arrays;
+import java.util.HashMap;
+
+public class Main{
+    public static void main(String[]args){
+        String[]arr = new String[]{"flower", "flight", "flow"};
+
+        Arrays.sort(arr);
+
+
+        StringBuilder latest = new StringBuilder();
+        for(int i = 0; i<Math.min(arr[0].length(), arr[arr.length-1].length()); i++){
+            if(arr[0].charAt(i)!=arr[arr.length-1].charAt(i)){
+                System.out.println(latest.toString());
+                break;
+
+
+            }
+            latest.append(arr[0].charAt(i));
+        }
+        System.out.println(latest.toString());
+
+
+    }
+}
