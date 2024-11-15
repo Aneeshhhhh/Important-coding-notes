@@ -1,0 +1,33 @@
+//StringBuilder is a class with a mutable object that acts as a string.
+
+public class Main{
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Hello");
+        System.out.println(sb);
+
+
+        sb.insert(2, "i");
+        System.out.println(sb);
+
+        sb.replace(1, 4, "iiiii"); //end's index is excluded
+        System.out.println(sb);
+
+        sb.append(" World");
+        System.out.println(sb);
+
+        sb.delete(4, 9);
+        System.out.println(sb);
+
+        sb.insert(4, " "); //consider that the insertion happens at the 3rd index or replaced
+        System.out.println(sb);
+
+        sb.reverse();
+        System.out.println(sb);
+
+        sb.toString();
+        System.out.println(sb);
+
+    }
+}
