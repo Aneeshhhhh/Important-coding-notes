@@ -1,0 +1,27 @@
+//Buffered streams add a buffer (a temporary storage area) to reduce the number of I/O operations. This increases efficiency, especially for large files.
+
+import java.io.*;
+
+public class Main{
+    public static void main(String[] args) {
+
+        try{
+            BufferedWriter writer = new BufferedWriter( new FileWriter("mm"));
+            writer.write("t");
+            writer.newLine();
+            writer.write("l");
+
+            BufferedReader reader = new BufferedReader(new FileReader(".in"));
+            String line;
+            while((line = reader.readLine())!=null){
+                System.out.println(line);
+
+            }
+            reader.close();
+
+
+        }catch(IOException e){
+            e.printStackTrace();
+
+        }    }
+}
