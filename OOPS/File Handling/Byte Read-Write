@@ -1,0 +1,26 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Main{
+    public static void main(String[] args) {
+
+        try{
+            FileOutputStream fos= new FileOutputStream(".out");
+            fos.write(new byte[]{65, 66, 67});
+            fos.close();
+
+            FileInputStream fis = new FileInputStream(".in");
+            int data;
+            while((data = fis.read())!=-1){
+                System.out.println((char)data);
+
+
+            }
+            fis.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+}
