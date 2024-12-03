@@ -1,0 +1,17 @@
+class Animal{
+    void spine(){
+        System.out.println("No");
+    }
+}
+class Mammal extends Animal{
+    @Override
+    void spine() {
+        System.out.println("Yes");
+    }
+}
+public class Main{
+    public static void main(String[] args) {
+        Mammal mammal = new Mammal();
+        mammal.spine();
+    }
+}
