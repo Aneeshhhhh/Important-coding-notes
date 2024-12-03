@@ -1,0 +1,19 @@
+class Math{
+      int x;
+
+      Math(){
+          
+      }
+      void print(int x){
+          System.out.println(x);
+      }
+
+}
+public class Main{
+    public static void main(String[] args) {
+        Math math = new Math();
+        math.print(4);
+
+
+    }
+}
