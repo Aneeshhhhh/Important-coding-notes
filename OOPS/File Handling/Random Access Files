@@ -1,0 +1,19 @@
+import java.io.RandomAccessFile;
+
+public class Main{
+    public static void main(String[]args){
+
+        try{
+            RandomAccessFile RandomAccessFile = new RandomAccessFile("example", "e");
+            RandomAccessFile.writeUTF("hey");
+
+            RandomAccessFile.seek(0);
+
+            RandomAccessFile.readLine();
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
