@@ -1,0 +1,8 @@
+abstract class Animal{
+    abstract void bark();
+}
+class Cat extends Animal{
+    void bark(){
+        System.out.println("meows");
+    }
+}
