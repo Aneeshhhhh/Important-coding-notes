@@ -1,0 +1,33 @@
+//My understanding of Singleton Design patterns is this:
+//Design patterns are a recorded pattern of code used by developers for reusability, standardization and compatability.
+//
+//Singleton Design pattern is a design pattern where a class has a single instance declared in a private constructor.
+//There is a public static method which checks if the private constructor has the instance or is null, and depending on it creates a new instance or returns the current one
+//The private constructor ensures that no new objects/instances are created and all the methods in the code pass through a single instance making it common and global to all
+//
+//This brings reusability, globalization, standardization, less strain on spatial overhead and commonality in the calling of methods
+//The downside is lack of flexibility and one must be cautious about thread safety
+//
+//What's the score for this and give your review
+
+
+public class Main {
+
+    private static Main instance;
+
+    private Main() {
+
+
+    }
+
+    public static Main getInstance() {
+        if(instance == null){
+            instance = new Main();
+
+        }
+        return instance;
+
+    }
+
+
+}
