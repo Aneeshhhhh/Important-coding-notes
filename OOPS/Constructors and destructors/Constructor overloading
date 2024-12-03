@@ -1,0 +1,21 @@
+class Math{
+      int x;
+      int y;
+
+      public Math(int x){
+
+      }
+      public Math(int x, int y){}
+      void print(int x){
+          System.out.println(x);
+      }
+
+}
+public class Main{
+    public static void main(String[] args) {
+        Math math = new Math(4);
+        math.print(4);
+
+
+    }
+}
