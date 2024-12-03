@@ -1,0 +1,11 @@
+class Math{
+    public static final int x = 10;
+    
+
+}
+public class Main{
+    public static void main(String[] args) {
+        int z = Math.x+2;
+        System.out.println(z);
+    }
+}
