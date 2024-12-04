@@ -1,0 +1,28 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class BufferedByteStreamExample {
+    public static void main(String[] args) {
+        // Specify the source and destination file paths
+        String sourceFile = "source.txt";
+        String destFile = "destination.txt";
+
+        // Initialize the BufferedInputStream and BufferedOutputStream
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(sourceFile));
+             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(destFile))) {
+
+            // Read and write data in chunks
+            int byteData;
+            while ((byteData = bis.read()) != -1) {
+                bos.write(byteData);  // Write the byte to the destination file
+            }
+
+            System.out.println("File has been copied successfully using Buffered Byte Streams.");
+        } catch (IOException e) {
+            System.out.println("Error occurred: " + e.getMessage());
+        }
+    }
+}
