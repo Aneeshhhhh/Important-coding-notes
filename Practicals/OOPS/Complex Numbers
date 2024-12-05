@@ -1,0 +1,23 @@
+class Complex{
+    double real;
+    double imaginary;
+
+    public Complex(double real, double imaginary){
+        this.real = real;
+        this.imaginary = imaginary;
+
+    }
+    public void add(Complex other){
+        double z = this.real+other.real;
+        double y = this.imaginary+other.imaginary;
+        System.out.println(z + y + "i");
+    }
+}
+public class Main{
+    public static void main(String[] args) {
+        Complex complex1 = new Complex(4.5, 6.7);
+        Complex complex2 = new Complex(44.5, 6.7);
+        complex2.add(complex1);
+
+    }
+}
