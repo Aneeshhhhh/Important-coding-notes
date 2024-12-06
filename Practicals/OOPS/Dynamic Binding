@@ -1,0 +1,42 @@
+abstract class Shape {
+    double value1, value2;
+
+    public void inputData(double value1, double value2) {
+        this.value1 = value1;
+        this.value2 = value2;
+    }
+
+    public abstract double computeArea();
+}
+
+class Triangle extends Shape {
+
+    @Override
+    public double computeArea() {
+        return 0.5 * value1 * value2;  // Area of triangle: 0.5 * base * height
+    }
+}
+
+class Rectangle extends Shape {
+
+    @Override
+    public double computeArea() {
+        return value1 * value2;  // Area of rectangle: length * width
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape shape;
+
+        // Triangle
+        shape = new Triangle();
+        shape.inputData(5, 10);  // Base = 5, Height = 10
+        System.out.println("Area of Triangle: " + shape.computeArea());
+
+        // Rectangle
+        shape = new Rectangle();
+        shape.inputData(4, 6);  // Length = 4, Width = 6
+        System.out.println("Area of Rectangle: " + shape.computeArea());
+    }
+}
