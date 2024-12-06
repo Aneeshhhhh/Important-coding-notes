@@ -1,0 +1,59 @@
+class Publication {
+    String title;
+    double price;
+    int copies;
+
+    public Publication(String title, double price, int copies) {
+        this.title = title;
+        this.price = price;
+        this.copies = copies;
+    }
+
+    public void saleCopy() {
+        System.out.println("Total Sale: " + (price * copies));
+    }
+}
+
+class Book extends Publication {
+    String author;
+
+    public Book(String title, double price, int copies, String author) {
+        super(title, price, copies);
+        this.author = author;
+    }
+
+    public void orderCopies(int additionalCopies) {
+        copies += additionalCopies;
+    }
+}
+
+class Magazine extends Publication {
+    int orderQty;
+    String currentIssue;
+
+    public Magazine(String title, double price, int copies, String currentIssue) {
+        super(title, price, copies);
+        this.currentIssue = currentIssue;
+    }
+
+    public void orderQty(int qty) {
+        orderQty += qty;
+    }
+
+    public void receiveIssue(String newIssue) {
+        currentIssue = newIssue;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book = new Book("Java Programming", 500, 10, "James Gosling");
+        book.orderCopies(15);
+        book.saleCopy();
+
+        Magazine magazine = new Magazine("Tech Monthly", 150, 20, "November 2024");
+        magazine.orderQty(30);
+        magazine.receiveIssue("December 2024");
+        magazine.saleCopy();
+    }
+}
