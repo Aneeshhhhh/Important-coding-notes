@@ -1,0 +1,89 @@
+// Car class (Base Class)
+abstract class Car {
+    public Car() {
+        prepareCar();
+    }
+
+    public abstract void prepareCar();
+
+    public void assembleParts() {
+        System.out.println("Assembling parts of the car.");
+    }
+
+    public void paintCar() {
+        System.out.println("Painting the car.");
+    }
+
+    public void installAccessories() {
+        System.out.println("Installing accessories.");
+    }
+
+    public void finalMakeup() {
+        System.out.println("Giving the final makeup to the car.");
+    }
+}
+
+// Hatchback class (Concrete Subclass)
+class Hatchback extends Car {
+    @Override
+    public void prepareCar() {
+        System.out.println("Building a Hatchback...");
+        assembleParts();
+        paintCar();
+        installAccessories();
+        finalMakeup();
+    }
+}
+
+// Sedan class (Concrete Subclass)
+class Sedan extends Car {
+    @Override
+    public void prepareCar() {
+        System.out.println("Building a Sedan...");
+        assembleParts();
+        paintCar();
+        installAccessories();
+        finalMakeup();
+    }
+}
+
+// SUV class (Concrete Subclass)
+class SUV extends Car {
+    @Override
+    public void prepareCar() {
+        System.out.println("Building an SUV...");
+        assembleParts();
+        paintCar();
+        installAccessories();
+        finalMakeup();
+    }
+}
+
+// CarFactory class
+class CarFactory {
+    public static Car buildCar(String carType) {
+        switch (carType.toUpperCase()) {
+            case "HATCHBACK":
+                return new Hatchback();
+            case "SEDAN":
+                return new Sedan();
+            case "SUV":
+                return new SUV();
+            default:
+                throw new IllegalArgumentException("Unknown car type: " + carType);
+        }
+    }
+}
+
+// Test Factory Pattern
+public class TestFactoryPattern {
+    public static void main(String[] args) {
+        Car car1 = CarFactory.buildCar("Hatchback");
+        System.out.println();
+
+        Car car2 = CarFactory.buildCar("Sedan");
+        System.out.println();
+
+        Car car3 = CarFactory.buildCar("SUV");
+    }
+}
