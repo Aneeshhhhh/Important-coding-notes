@@ -1,0 +1,112 @@
+class Employee {
+    String empName, empId, address, mailId;
+    long mobileNo;
+
+    public Employee(String empName, String empId, String address, String mailId, long mobileNo) {
+        this.empName = empName;
+        this.empId = empId;
+        this.address = address;
+        this.mailId = mailId;
+        this.mobileNo = mobileNo;
+    }
+}
+
+class Programmer extends Employee {
+    double basicPay;
+
+    public Programmer(String empName, String empId, String address, String mailId, long mobileNo, double basicPay) {
+        super(empName, empId, address, mailId, mobileNo);
+        this.basicPay = basicPay;
+    }
+
+    public void generatePaySlip() {
+        double da = 0.97 * basicPay;
+        double hra = 0.10 * basicPay;
+        double pf = 0.12 * basicPay;
+        double staffClubFund = 0.001 * basicPay;
+        double grossSalary = basicPay + da + hra;
+        double netSalary = grossSalary - pf - staffClubFund;
+        System.out.println("Programmer Pay Slip");
+        System.out.println("Gross Salary: " + grossSalary);
+        System.out.println("Net Salary: " + netSalary);
+    }
+}
+
+class TeamLead extends Employee {
+    double basicPay;
+
+    public TeamLead(String empName, String empId, String address, String mailId, long mobileNo, double basicPay) {
+        super(empName, empId, address, mailId, mobileNo);
+        this.basicPay = basicPay;
+    }
+
+    public void generatePaySlip() {
+        double da = 0.97 * basicPay;
+        double hra = 0.10 * basicPay;
+        double pf = 0.12 * basicPay;
+        double staffClubFund = 0.001 * basicPay;
+        double grossSalary = basicPay + da + hra;
+        double netSalary = grossSalary - pf - staffClubFund;
+        System.out.println("Team Lead Pay Slip");
+        System.out.println("Gross Salary: " + grossSalary);
+        System.out.println("Net Salary: " + netSalary);
+    }
+}
+
+class AssistantProjectManager extends Employee {
+    double basicPay;
+
+    public AssistantProjectManager(String empName, String empId, String address, String mailId, long mobileNo, double basicPay) {
+        super(empName, empId, address, mailId, mobileNo);
+        this.basicPay = basicPay;
+    }
+
+    public void generatePaySlip() {
+        double da = 0.97 * basicPay;
+        double hra = 0.10 * basicPay;
+        double pf = 0.12 * basicPay;
+        double staffClubFund = 0.001 * basicPay;
+        double grossSalary = basicPay + da + hra;
+        double netSalary = grossSalary - pf - staffClubFund;
+        System.out.println("Assistant Project Manager Pay Slip");
+        System.out.println("Gross Salary: " + grossSalary);
+        System.out.println("Net Salary: " + netSalary);
+    }
+}
+
+class ProjectManager extends Employee {
+    double basicPay;
+
+    public ProjectManager(String empName, String empId, String address, String mailId, long mobileNo, double basicPay) {
+        super(empName, empId, address, mailId, mobileNo);
+        this.basicPay = basicPay;
+    }
+
+    public void generatePaySlip() {
+        double da = 0.97 * basicPay;
+        double hra = 0.10 * basicPay;
+        double pf = 0.12 * basicPay;
+        double staffClubFund = 0.001 * basicPay;
+        double grossSalary = basicPay + da + hra;
+        double netSalary = grossSalary - pf - staffClubFund;
+        System.out.println("Project Manager Pay Slip");
+        System.out.println("Gross Salary: " + grossSalary);
+        System.out.println("Net Salary: " + netSalary);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Programmer programmer = new Programmer("Alice", "P101", "123 Main St", "alice@mail.com", 1234567890, 50000);
+        programmer.generatePaySlip();
+
+        TeamLead teamLead = new TeamLead("Bob", "T102", "456 Oak St", "bob@mail.com", 9876543210, 70000);
+        teamLead.generatePaySlip();
+
+        AssistantProjectManager apm = new AssistantProjectManager("Charlie", "A103", "789 Pine St", "charlie@mail.com", 1122334455, 90000);
+        apm.generatePaySlip();
+
+        ProjectManager pm = new ProjectManager("David", "M104", "321 Elm St", "david@mail.com", 5566778899, 120000);
+        pm.generatePaySlip();
+    }
+}
