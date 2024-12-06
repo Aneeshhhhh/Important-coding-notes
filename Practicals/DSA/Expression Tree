@@ -1,0 +1,144 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <cctype>
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+
+    Node(char val) {
+        data = val;
+        left = right = nullptr;
+    }
+};
+
+class ExpressionTree {
+public:
+    Node* constructFromPostfix(const string& postfix) {
+        stack<Node*> st;
+        for (char ch : postfix) {
+            if (isalnum(ch)) {
+                st.push(new Node(ch));
+            } else {
+                Node* node = new Node(ch);
+                node->right = st.top(); st.pop();
+                node->left = st.top(); st.pop();
+                st.push(node);
+            }
+        }
+        return st.top();
+    }
+
+    Node* constructFromPrefix(const string& prefix) {
+        stack<Node*> st;
+        for (int i = prefix.length() - 1; i >= 0; --i) {
+            char ch = prefix[i];
+            if (isalnum(ch)) {
+                st.push(new Node(ch));
+            } else {
+                Node* node = new Node(ch);
+                node->left = st.top(); st.pop();
+                node->right = st.top(); st.pop();
+                st.push(node);
+            }
+        }
+        return st.top();
+    }
+
+    void recursiveInOrder(Node* root) {
+        if (root == nullptr) return;
+        recursiveInOrder(root->left);
+        cout << root->data << " ";
+        recursiveInOrder(root->right);
+    }
+
+    void recursivePreOrder(Node* root) {
+        if (root == nullptr) return;
+        cout << root->data << " ";
+        recursivePreOrder(root->left);
+        recursivePreOrder(root->right);
+    }
+
+    void recursivePostOrder(Node* root) {
+        if (root == nullptr) return;
+        recursivePostOrder(root->left);
+        recursivePostOrder(root->right);
+        cout << root->data << " ";
+    }
+
+    void nonRecursiveInOrder(Node* root) {
+        stack<Node*> st;
+        Node* curr = root;
+        while (curr != nullptr || !st.empty()) {
+            while (curr != nullptr) {
+                st.push(curr);
+                curr = curr->left;
+            }
+            curr = st.top(); st.pop();
+            cout << curr->data << " ";
+            curr = curr->right;
+        }
+    }
+
+    void nonRecursivePreOrder(Node* root) {
+        if (root == nullptr) return;
+        stack<Node*> st;
+        st.push(root);
+        while (!st.empty()) {
+            Node* node = st.top(); st.pop();
+            cout << node->data << " ";
+            if (node->right) st.push(node->right);
+            if (node->left) st.push(node->left);
+        }
+    }
+
+    void nonRecursivePostOrder(Node* root) {
+        if (root == nullptr) return;
+        stack<Node*> st1, st2;
+        st1.push(root);
+        while (!st1.empty()) {
+            Node* node = st1.top(); st1.pop();
+            st2.push(node);
+            if (node->left) st1.push(node->left);
+            if (node->right) st1.push(node->right);
+        }
+        while (!st2.empty()) {
+            cout << st2.top()->data << " ";
+            st2.pop();
+        }
+    }
+};
+
+int main() {
+    ExpressionTree tree;
+    string postfix = "ab+c*";
+    string prefix = "*+abc";
+
+    Node* rootPostfix = tree.constructFromPostfix(postfix);
+    Node* rootPrefix = tree.constructFromPrefix(prefix);
+
+    cout << "Recursive In-Order (Postfix Tree): ";
+    tree.recursiveInOrder(rootPostfix);
+    cout << "\nNon-Recursive In-Order (Postfix Tree): ";
+    tree.nonRecursiveInOrder(rootPostfix);
+
+    cout << "\nRecursive Pre-Order (Postfix Tree): ";
+    tree.recursivePreOrder(rootPostfix);
+    cout << "\nNon-Recursive Pre-Order (Postfix Tree): ";
+    tree.nonRecursivePreOrder(rootPostfix);
+
+    cout << "\nRecursive Post-Order (Postfix Tree): ";
+    tree.recursivePostOrder(rootPostfix);
+    cout << "\nNon-Recursive Post-Order (Postfix Tree): ";
+    tree.nonRecursivePostOrder(rootPostfix);
+
+    cout << "\n\nRecursive In-Order (Prefix Tree): ";
+    tree.recursiveInOrder(rootPrefix);
+    cout << "\nNon-Recursive In-Order (Prefix Tree): ";
+    tree.nonRecursiveInOrder(rootPrefix);
+
+    return 0;
+}
