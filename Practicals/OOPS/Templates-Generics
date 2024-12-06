@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    
+    // Generic method to count elements that satisfy a specific property
+    public static <T> int countProperty(List<T> list, PropertyCheck<T> propertyCheck) {
+        int count = 0;
+        for (T element : list) {
+            if (propertyCheck.checkProperty(element)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Functional interface for property check
+    interface PropertyCheck<T> {
+        boolean checkProperty(T element);
+    }
+
+    // Method to check if a number is even
+    public static boolean isEven(int num) {
+        return num % 2 == 0;
+    }
+
+    // Method to check if a number is odd
+    public static boolean isOdd(int num) {
+        return num % 2 != 0;
+    }
+
+    // Method to check if a number is prime
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Method to check if a number is palindrome
+    public static boolean isPalindrome(int num) {
+        int original = num, reversed = 0;
+        while (num != 0) {
+            reversed = reversed * 10 + num % 10;
+            num /= 10;
+        }
+        return original == reversed;
+    }
+
+    public static void main(String[] args) {
+        List<Integer> numbers = new ArrayList<>();
+        numbers.add(121); // Palindrome
+        numbers.add(34);  // Even
+        numbers.add(7);   // Prime
+        numbers.add(28);  // Even
+        numbers.add(13);  // Prime
+        numbers.add(111); // Palindrome
+        numbers.add(5);   // Odd
+
+        // Count even numbers
+        int evenCount = countProperty(numbers, Main::isEven);
+        System.out.println("Number of even numbers: " + evenCount);
+
+        // Count odd numbers
+        int oddCount = countProperty(numbers, Main::isOdd);
+        System.out.println("Number of odd numbers: " + oddCount);
+
+        // Count prime numbers
+        int primeCount = countProperty(numbers, Main::isPrime);
+        System.out.println("Number of prime numbers: " + primeCount);
+
+        // Count palindrome numbers
+        int palindromeCount = countProperty(numbers, Main::isPalindrome);
+        System.out.println("Number of palindrome numbers: " + palindromeCount);
+    }
+}
