@@ -1,0 +1,143 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Student {
+    int roll;
+    string name;
+    char division;
+    string address;
+
+public:
+    void input() {
+        cout << "Enter Roll Number: ";
+        cin >> roll;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, name);
+        cout << "Enter Division: ";
+        cin >> division;
+        cin.ignore();
+        cout << "Enter Address: ";
+        getline(cin, address);
+    }
+
+    void display() {
+        cout << "Roll Number: " << roll << endl;
+        cout << "Name: " << name << endl;
+        cout << "Division: " << division << endl;
+        cout << "Address: " << address << endl;
+    }
+
+    int getRoll() {
+        return roll;
+    }
+};
+
+void addStudent() {
+    ofstream outFile("students.dat", ios::binary | ios::app);
+    Student s;
+    s.input();
+    outFile.write((char*)&s, sizeof(s));
+    outFile.close();
+    cout << "Student added successfully.\n";
+}
+
+void displayStudent(int roll) {
+    ifstream inFile("students.dat", ios::binary);
+    Student s;
+    bool found = false;
+
+    while (inFile.read((char*)&s, sizeof(s))) {
+        if (s.getRoll() == roll) {
+            cout << "Student Details:\n";
+            s.display();
+            found = true;
+            break;
+        }
+    }
+    inFile.close();
+
+    if (!found) {
+        cout << "Student with Roll Number " << roll << " not found.\n";
+    }
+}
+
+void deleteStudent(int roll) {
+    ifstream inFile("students.dat", ios::binary);
+    ofstream tempFile("temp.dat", ios::binary);
+    Student s;
+    bool found = false;
+
+    while (inFile.read((char*)&s, sizeof(s))) {
+        if (s.getRoll() == roll) {
+            found = true;
+        } else {
+            tempFile.write((char*)&s, sizeof(s));
+        }
+    }
+
+    inFile.close();
+    tempFile.close();
+    remove("students.dat");
+    rename("temp.dat", "students.dat");
+
+    if (found) {
+        cout << "Student with Roll Number " << roll << " deleted successfully.\n";
+    } else {
+        cout << "Student with Roll Number " << roll << " not found.\n";
+    }
+}
+
+void displayAllStudents() {
+    ifstream inFile("students.dat", ios::binary);
+    Student s;
+
+    cout << "Student Records:\n";
+    while (inFile.read((char*)&s, sizeof(s))) {
+        s.display();
+        cout << "-----------------------\n";
+    }
+    inFile.close();
+}
+
+int main() {
+    int choice, roll;
+    do {
+        cout << "\nStudent Database Menu:\n";
+        cout << "1. Add Student\n";
+        cout << "2. Display All Students\n";
+        cout << "3. Search Student by Roll Number\n";
+        cout << "4. Delete Student by Roll Number\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            addStudent();
+            break;
+        case 2:
+            displayAllStudents();
+            break;
+        case 3:
+            cout << "Enter Roll Number to Search: ";
+            cin >> roll;
+            displayStudent(roll);
+            break;
+        case 4:
+            cout << "Enter Roll Number to Delete: ";
+            cin >> roll;
+            deleteStudent(roll);
+            break;
+        case 5:
+            cout << "Exiting...\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
