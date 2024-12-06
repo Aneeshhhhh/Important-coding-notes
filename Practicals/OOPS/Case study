@@ -1,0 +1,184 @@
+import java.util.*;
+
+class BankAccount {
+    private String accountHolderName;
+    private int accountNumber;
+    private double balance;
+    private static final double DAILY_WITHDRAWAL_LIMIT = 10000;
+    private double dailyWithdrawalAmount;
+
+    // Constructor to create an account
+    public BankAccount(String accountHolderName, int accountNumber, double initialDeposit) {
+        this.accountHolderName = accountHolderName;
+        this.accountNumber = accountNumber;
+        this.balance = initialDeposit;
+        this.dailyWithdrawalAmount = 0;
+    }
+
+    // Method to deposit money
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: " + amount);
+        } else {
+            System.out.println("Amount should be greater than zero.");
+        }
+    }
+
+    // Method to withdraw money
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance && (dailyWithdrawalAmount + amount) <= DAILY_WITHDRAWAL_LIMIT) {
+            balance -= amount;
+            dailyWithdrawalAmount += amount;
+            System.out.println("Withdrawn: " + amount);
+        } else if (amount <= 0) {
+            System.out.println("Amount should be greater than zero.");
+        } else if (amount > balance) {
+            System.out.println("Insufficient funds.");
+        } else {
+            System.out.println("Exceeds daily withdrawal limit.");
+        }
+    }
+
+    // Method to check balance
+    public void checkBalance() {
+        System.out.println("Current balance: " + balance);
+    }
+
+    // Method to display account information
+    public void displayAccountInfo() {
+        System.out.println("Account Holder: " + accountHolderName);
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Balance: " + balance);
+    }
+
+    // Method to reset daily withdrawal amount (could be called daily)
+    public void resetDailyLimit() {
+        dailyWithdrawalAmount = 0;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+}
+
+public class BankingSystem {
+    private static Map<Integer, BankAccount> accounts = new HashMap<>();
+
+    // Method to create a new account
+    public static void createAccount() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter account holder name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        System.out.print("Enter initial deposit amount: ");
+        double initialDeposit = scanner.nextDouble();
+
+        BankAccount newAccount = new BankAccount(name, accountNumber, initialDeposit);
+        accounts.put(accountNumber, newAccount);
+        System.out.println("Account created successfully!");
+    }
+
+    // Method to handle deposit
+    public static void depositMoney() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        if (accounts.containsKey(accountNumber)) {
+            System.out.print("Enter deposit amount: ");
+            double amount = scanner.nextDouble();
+            accounts.get(accountNumber).deposit(amount);
+        } else {
+            System.out.println("Account not found!");
+        }
+    }
+
+    // Method to handle withdrawal
+    public static void withdrawMoney() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        if (accounts.containsKey(accountNumber)) {
+            System.out.print("Enter withdrawal amount: ");
+            double amount = scanner.nextDouble();
+            accounts.get(accountNumber).withdraw(amount);
+        } else {
+            System.out.println("Account not found!");
+        }
+    }
+
+    // Method to display balance
+    public static void displayBalance() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        if (accounts.containsKey(accountNumber)) {
+            accounts.get(accountNumber).checkBalance();
+        } else {
+            System.out.println("Account not found!");
+        }
+    }
+
+    // Method to display account information
+    public static void displayAccountInfo() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter account number: ");
+        int accountNumber = scanner.nextInt();
+        if (accounts.containsKey(accountNumber)) {
+            accounts.get(accountNumber).displayAccountInfo();
+        } else {
+            System.out.println("Account not found!");
+        }
+    }
+
+    // Main method to handle the operations
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        while (true) {
+            System.out.println("\nBanking System");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. Check Balance");
+            System.out.println("5. Display Account Information");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    createAccount();
+                    break;
+                case 2:
+                    depositMoney();
+                    break;
+                case 3:
+                    withdrawMoney();
+                    break;
+                case 4:
+                    displayBalance();
+                    break;
+                case 5:
+                    displayAccountInfo();
+                    break;
+                case 6:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
