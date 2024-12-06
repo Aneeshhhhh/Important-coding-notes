@@ -1,0 +1,145 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Student {
+    int rollNo;
+    string name;
+    float SGPA;
+};
+
+// Function to print the list of students
+void printList(const vector<Student>& students) {
+    for (const auto& student : students) {
+        cout << "Roll No: " << student.rollNo << ", Name: " << student.name << ", SGPA: " << student.SGPA << endl;
+    }
+}
+
+// Bubble Sort to arrange students according to Roll No
+void bubbleSortByRollNo(vector<Student>& students) {
+    int n = students.size();
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (students[j].rollNo > students[j+1].rollNo) {
+                swap(students[j], students[j+1]);
+            }
+        }
+    }
+}
+
+// Insertion Sort to arrange students alphabetically by name
+void insertionSortByName(vector<Student>& students) {
+    int n = students.size();
+    for (int i = 1; i < n; i++) {
+        Student key = students[i];
+        int j = i - 1;
+        while (j >= 0 && students[j].name > key.name) {
+            students[j + 1] = students[j];
+            j = j - 1;
+        }
+        students[j + 1] = key;
+    }
+}
+
+// Partition function for Quick Sort (used in part c)
+int partition(vector<Student>& students, int low, int high) {
+    float pivot = students[high].SGPA;
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j++) {
+        if (students[j].SGPA > pivot) {
+            i++;
+            swap(students[i], students[j]);
+        }
+    }
+    swap(students[i + 1], students[high]);
+    return (i + 1);
+}
+
+// Quick Sort to arrange students based on SGPA (top 10)
+void quickSort(vector<Student>& students, int low, int high) {
+    if (low < high) {
+        int pi = partition(students, low, high);
+        quickSort(students, low, pi - 1);
+        quickSort(students, pi + 1, high);
+    }
+}
+
+// Function to search students by SGPA
+void searchBySGPA(const vector<Student>& students, float searchSGPA) {
+    cout << "Students with SGPA " << searchSGPA << ":" << endl;
+    for (const auto& student : students) {
+        if (student.SGPA == searchSGPA) {
+            cout << "Roll No: " << student.rollNo << ", Name: " << student.name << ", SGPA: " << student.SGPA << endl;
+        }
+    }
+}
+
+// Function for Binary Search by name (non-recursive)
+void binarySearchByName(vector<Student>& students, const string& searchName) {
+    int low = 0, high = students.size() - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (students[mid].name == searchName) {
+            cout << "Student found: Roll No: " << students[mid].rollNo << ", Name: " << students[mid].name << ", SGPA: " << students[mid].SGPA << endl;
+            return;
+        }
+        else if (students[mid].name < searchName)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+    cout << "Student not found" << endl;
+}
+
+int main() {
+    vector<Student> students = {
+        {1, "Alice", 8.5},
+        {2, "Bob", 9.2},
+        {3, "Charlie", 8.0},
+        {4, "David", 8.9},
+        {5, "Eva", 7.8},
+        {6, "Frank", 9.0},
+        {7, "Grace", 9.5},
+        {8, "Hannah", 7.5},
+        {9, "Ivy", 8.2},
+        {10, "Jack", 8.7},
+        {11, "Karl", 9.1},
+        {12, "Liam", 7.9},
+        {13, "Mona", 8.4},
+        {14, "Nina", 9.3},
+        {15, "Oscar", 8.6}
+    };
+
+    cout << "Original List of Students:" << endl;
+    printList(students);
+
+    // Part (a) Bubble Sort by Roll No
+    bubbleSortByRollNo(students);
+    cout << "\nList Sorted by Roll No:" << endl;
+    printList(students);
+
+    // Part (b) Insertion Sort by Name
+    insertionSortByName(students);
+    cout << "\nList Sorted Alphabetically by Name:" << endl;
+    printList(students);
+
+    // Part (c) Quick Sort by SGPA (Top 10 Toppers)
+    quickSort(students, 0, students.size() - 1);
+    cout << "\nTop 10 Toppers by SGPA:" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "Roll No: " << students[i].rollNo << ", Name: " << students[i].name << ", SGPA: " << students[i].SGPA << endl;
+    }
+
+    // Part (d) Search by SGPA
+    float searchSGPA = 8.5;
+    searchBySGPA(students, searchSGPA);
+
+    // Part (e) Binary Search by Name (Non-recursive)
+    string searchName = "Grace";
+    binarySearchByName(students, searchName);
+
+    return 0;
+}
