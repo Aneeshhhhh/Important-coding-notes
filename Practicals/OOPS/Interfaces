@@ -1,0 +1,84 @@
+// Define the interface for common functionalities of all vehicles
+interface Vehicle {
+    void gearChange();
+    void speedUp();
+    void applyBrakes();
+}
+
+// Implement the interface in Bicycle class
+class Bicycle implements Vehicle {
+    @Override
+    public void gearChange() {
+        System.out.println("Bicycle gear changed.");
+    }
+
+    @Override
+    public void speedUp() {
+        System.out.println("Bicycle speeding up.");
+    }
+
+    @Override
+    public void applyBrakes() {
+        System.out.println("Bicycle brakes applied.");
+    }
+}
+
+// Implement the interface in Bike class
+class Bike implements Vehicle {
+    @Override
+    public void gearChange() {
+        System.out.println("Bike gear changed.");
+    }
+
+    @Override
+    public void speedUp() {
+        System.out.println("Bike speeding up.");
+    }
+
+    @Override
+    public void applyBrakes() {
+        System.out.println("Bike brakes applied.");
+    }
+}
+
+// Implement the interface in Car class
+class Car implements Vehicle {
+    @Override
+    public void gearChange() {
+        System.out.println("Car gear changed.");
+    }
+
+    @Override
+    public void speedUp() {
+        System.out.println("Car speeding up.");
+    }
+
+    @Override
+    public void applyBrakes() {
+        System.out.println("Car brakes applied.");
+    }
+}
+
+// Main class to test the vehicles
+public class Main {
+    public static void main(String[] args) {
+        Vehicle bicycle = new Bicycle();
+        Vehicle bike = new Bike();
+        Vehicle car = new Car();
+
+        System.out.println("Bicycle actions:");
+        bicycle.gearChange();
+        bicycle.speedUp();
+        bicycle.applyBrakes();
+
+        System.out.println("\nBike actions:");
+        bike.gearChange();
+        bike.speedUp();
+        bike.applyBrakes();
+
+        System.out.println("\nCar actions:");
+        car.gearChange();
+        car.speedUp();
+        car.applyBrakes();
+    }
+}
