@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        try {
+            System.out.print("Enter the first number (Num1): ");
+            String num1 = sc.nextLine();
+            System.out.print("Enter the second number (Num2): ");
+            String num2 = sc.nextLine();
+
+            // Parse the input strings to integers
+            int num1Int = Integer.parseInt(num1);
+            int num2Int = Integer.parseInt(num2);
+            
+            // Handle ArithmeticException: division by zero
+            if (num2Int == 0) {
+                throw new ArithmeticException("Cannot divide by zero.");
+            }
+            
+            // Perform division
+            int result = num1Int / num2Int;
+            System.out.println("Result of division: " + result);
+            
+            // Array operation to check ArrayIndexOutOfBoundsException
+            int[] arr = new int[5];
+            System.out.println("Accessing index 10 in the array:");
+            System.out.println(arr[10]);  // This will throw ArrayIndexOutOfBoundsException
+
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid input. Please enter integers.");
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Array index is out of bounds.");
+        } finally {
+            sc.close();
+            System.out.println("Program terminated.");
+        }
+    }
+}
