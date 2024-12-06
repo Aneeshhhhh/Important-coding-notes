@@ -1,0 +1,231 @@
+import java.io.*;
+import java.util.*;
+
+class Student {
+    int studentId;
+    String name;
+    int rollNo;
+    String studentClass;
+    double marks;
+    String address;
+
+    public Student(int studentId, String name, int rollNo, String studentClass, double marks, String address) {
+        this.studentId = studentId;
+        this.name = name;
+        this.rollNo = rollNo;
+        this.studentClass = studentClass;
+        this.marks = marks;
+        this.address = address;
+    }
+
+    public String toString() {
+        return studentId + "," + name + "," + rollNo + "," + studentClass + "," + marks + "," + address;
+    }
+}
+
+public class StudentDatabase {
+
+    private static final String FILE_NAME = "student_records.txt";
+
+    // 1. Create Database
+    public static void createDatabase() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter number of students: ");
+            int numberOfStudents = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+            for (int i = 0; i < numberOfStudents; i++) {
+                System.out.println("Enter details for student " + (i + 1) + ": ");
+                System.out.print("Student ID: ");
+                int studentId = scanner.nextInt();
+                scanner.nextLine(); // consume newline
+                System.out.print("Name: ");
+                String name = scanner.nextLine();
+                System.out.print("Roll No: ");
+                int rollNo = scanner.nextInt();
+                scanner.nextLine(); // consume newline
+                System.out.print("Class: ");
+                String studentClass = scanner.nextLine();
+                System.out.print("Marks: ");
+                double marks = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                System.out.print("Address: ");
+                String address = scanner.nextLine();
+
+                Student student = new Student(studentId, name, rollNo, studentClass, marks, address);
+                writer.write(student.toString());
+                writer.newLine();
+            }
+            System.out.println("Database created successfully.");
+        } catch (IOException e) {
+            System.out.println("Error creating the database: " + e.getMessage());
+        }
+    }
+
+    // 2. Display Database
+    public static void displayDatabase() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] studentData = line.split(",");
+                System.out.println("Student ID: " + studentData[0]);
+                System.out.println("Name: " + studentData[1]);
+                System.out.println("Roll No: " + studentData[2]);
+                System.out.println("Class: " + studentData[3]);
+                System.out.println("Marks: " + studentData[4]);
+                System.out.println("Address: " + studentData[5]);
+                System.out.println();
+            }
+        } catch (IOException e) {
+            System.out.println("Error displaying the database: " + e.getMessage());
+        }
+    }
+
+    // 3. Delete Records
+    public static void deleteRecord(int studentIdToDelete) {
+        File tempFile = new File("temp_student_records.txt");
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String line;
+            boolean recordFound = false;
+            while ((line = reader.readLine()) != null) {
+                String[] studentData = line.split(",");
+                if (Integer.parseInt(studentData[0]) != studentIdToDelete) {
+                    writer.write(line);
+                    writer.newLine();
+                } else {
+                    recordFound = true;
+                }
+            }
+            if (recordFound) {
+                tempFile.renameTo(new File(FILE_NAME));
+                System.out.println("Record deleted successfully.");
+            } else {
+                tempFile.delete();
+                System.out.println("Record not found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error deleting record: " + e.getMessage());
+        }
+    }
+
+    // 4. Update Record
+    public static void updateRecord(int studentIdToUpdate) {
+        File tempFile = new File("temp_student_records.txt");
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String line;
+            boolean recordFound = false;
+            Scanner scanner = new Scanner(System.in);
+            while ((line = reader.readLine()) != null) {
+                String[] studentData = line.split(",");
+                if (Integer.parseInt(studentData[0]) == studentIdToUpdate) {
+                    recordFound = true;
+                    System.out.print("Enter new Name: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Enter new Roll No: ");
+                    int newRollNo = scanner.nextInt();
+                    scanner.nextLine(); // consume newline
+                    System.out.print("Enter new Class: ");
+                    String newClass = scanner.nextLine();
+                    System.out.print("Enter new Marks: ");
+                    double newMarks = scanner.nextDouble();
+                    scanner.nextLine(); // consume newline
+                    System.out.print("Enter new Address: ");
+                    String newAddress = scanner.nextLine();
+
+                    Student updatedStudent = new Student(studentIdToUpdate, newName, newRollNo, newClass, newMarks, newAddress);
+                    writer.write(updatedStudent.toString());
+                    writer.newLine();
+                } else {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+            if (recordFound) {
+                tempFile.renameTo(new File(FILE_NAME));
+                System.out.println("Record updated successfully.");
+            } else {
+                tempFile.delete();
+                System.out.println("Record not found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating record: " + e.getMessage());
+        }
+    }
+
+    // 5. Search Record
+    public static void searchRecord(int studentIdToSearch) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            boolean recordFound = false;
+            while ((line = reader.readLine()) != null) {
+                String[] studentData = line.split(",");
+                if (Integer.parseInt(studentData[0]) == studentIdToSearch) {
+                    recordFound = true;
+                    System.out.println("Student ID: " + studentData[0]);
+                    System.out.println("Name: " + studentData[1]);
+                    System.out.println("Roll No: " + studentData[2]);
+                    System.out.println("Class: " + studentData[3]);
+                    System.out.println("Marks: " + studentData[4]);
+                    System.out.println("Address: " + studentData[5]);
+                    System.out.println();
+                }
+            }
+            if (!recordFound) {
+                System.out.println("Record not found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error searching record: " + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("Student Database Menu:");
+            System.out.println("1. Create Database");
+            System.out.println("2. Display Database");
+            System.out.println("3. Delete Record");
+            System.out.println("4. Update Record");
+            System.out.println("5. Search Record");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    createDatabase();
+                    break;
+                case 2:
+                    displayDatabase();
+                    break;
+                case 3:
+                    System.out.print("Enter Student ID to delete: ");
+                    int studentIdToDelete = scanner.nextInt();
+                    deleteRecord(studentIdToDelete);
+                    break;
+                case 4:
+                    System.out.print("Enter Student ID to update: ");
+                    int studentIdToUpdate = scanner.nextInt();
+                    updateRecord(studentIdToUpdate);
+                    break;
+                case 5:
+                    System.out.print("Enter Student ID to search: ");
+                    int studentIdToSearch = scanner.nextInt();
+                    searchRecord(studentIdToSearch);
+                    break;
+                case 6:
+                    System.out.println("Exiting program.");
+                    break;
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        } while (choice != 6);
+
+        scanner.close();
+    }
+}
