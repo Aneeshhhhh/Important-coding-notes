@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS myData;
+
+USE myData;
+
+CREATE TABLE IF NOT EXISTS Userss(
+cell INT PRIMARY KEY,
+name VARCHAR(100),
+address VARCHAR(100)
+);
+
+INSERT INTO Userss( cell, name, address)
+VALUES( 123, 'Y', 'TT');
+
+SELECT *FROM Userss;
