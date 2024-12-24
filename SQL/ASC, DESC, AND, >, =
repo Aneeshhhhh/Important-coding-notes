@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS myData;
+
+USE myData;
+
+CREATE TABLE IF NOT EXISTS Userss(
+cell INT PRIMARY KEY,
+name VARCHAR(100),
+address VARCHAR(100)
+);
+
+INSERT INTO Userss( cell, name, address)
+VALUES( 1235, 'Y', 'TT');
+
+INSERT INTO Userss( cell, name, address)
+VALUES(1234, 'T', 'RRRR');
+
+
+
+SELECT * FROM Userss WHERE name = 'Y' and cell = 123
+SELECT * FROM Userss WHERE cell>123
+SELECT * FROM Userss;
+ORDER BY name
+
+ORDER BY name ASC, cell DESC
+
