@@ -1,0 +1,31 @@
+CREATE DATABASE IF NOT EXISTS myData;
+
+USE myData;
+
+CREATE TABLE IF NOT EXISTS Userss(
+cell INT PRIMARY KEY,
+name VARCHAR(100),
+address VARCHAR(100)
+);
+
+INSERT INTO Userss( cell, name, address)
+VALUES( 1235, 'Y', 'TT');
+
+INSERT INTO Userss( cell, name, address)
+VALUES(1234, 'T', 'RRRR');
+
+
+
+SELECT COUNT(*) AS users FROM Userss;
+
+SELECT
+MIN(cell) as smallest_cell,
+AVG(cell) as average,
+MAX(cell) as max
+FROM Userss;
+
+SELECT address, COUNT(*) AS user
+FROM Userss
+GROUP BY address
+HAVING user>1;
+
